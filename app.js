@@ -6,7 +6,7 @@ var express         = require("express"),
     LocalStrategy   = require("passport-local"),
     methodOverride  = require("method-override"),
     flash           = require("connect-flash"),
-    Campground      = require("./models/campground"),
+    Player      = require("./models/player"),
     Comment         = require("./models/comment"),
     User            = require("./models/user"),
     port            = process.env.PORT || 3000;
@@ -24,7 +24,7 @@ app.use(flash());
 
 // Passport config
 app.use(require("express-session")({
-    secret: "Once again Rusty wins cutest dog!",
+    secret: "Bentley is the cutest dog!",
     resave: false,
     saveUninitialized: false
 }));
