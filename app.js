@@ -6,8 +6,8 @@ var express         = require("express"),
     LocalStrategy   = require("passport-local"),
     methodOverride  = require("method-override"),
     flash           = require("connect-flash"),
-    Player      = require("./models/player"),
-    Comment         = require("./models/comment"),
+    Post            = require("./models/post"),
+    Reply           = require("./models/reply"),
     User            = require("./models/user"),
     port            = process.env.PORT || 3000;
 
@@ -22,9 +22,12 @@ app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
 
+// Tell app to use momentjs to timestamp posts and replies
+app.locals.moment = require("moment");
+
 // Passport config
 app.use(require("express-session")({
-    secret: "Bentley is the cutest dog!",
+    secret: "Bentley is the cutest!",
     resave: false,
     saveUninitialized: false
 }));
