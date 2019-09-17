@@ -48,7 +48,7 @@ app.use(function(req, res, next){
 
 app.use("/", indexRoutes);
 app.use("/posts", postRoutes);
-app.use("/posts/:id/replies", replyRoutes);
+app.use("/posts/:id/comments", commentRoutes);
 
 app.listen(port, function(){
     console.log("App is starting!!!");

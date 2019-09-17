@@ -1,3 +1,5 @@
+<$ include ./partials/authHeader %>
+
 <div class="container">
     <form>
         <div class="form-group">
@@ -10,5 +12,8 @@
           <input type="password" class="form-control" name="password" placeholder="Password">
         </div>
         <button type="submit" class="btn btn-success">Submit</button>
+        <small class="form-text text-muted">New to CourtVision? <a href="./register.ejs">Sign up</a></small>
     </form>
 </div>
+
+<$ include ./partials/footer %>

@@ -12,10 +12,10 @@ const mongoose = require("mongoose"),
                   ref: "User"
               }
           },
-          replies: [
+          comments: [
               {
                   type: mongoose.Schema.Types.ObjectId,
-                  ref: "Reply"
+                  ref: "Comment"
               }
           ]
 });

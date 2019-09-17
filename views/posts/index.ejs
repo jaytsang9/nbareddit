@@ -1,0 +1,36 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <header class="jumbotron bg-secondary">
+        <div class="container">
+            <h1>Welcome to Discussion Forums!</h1>
+            <p>View our most hotly-debated topics!</p>
+            <p><a href="/posts/new">Add new post</a></p>
+        </div>
+    </header>
+
+    <% posts.forEach((post) =>{ %>
+        <div class="row">
+            <div class="col-sm-12">
+                <strong><%= post.author.username %></strong>
+                <span class="float-right"><%= moment(post.createdAt).fromNow() %></span>
+                <p><%= post.description %></p>
+                <% if (currentUser && post.author.id.equals(currentUser.id)) {%>
+                    <div class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-h">
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item btn btn-warning btn-sm" href="/posts/<%= post._id %>/edit">Edit</a>
+                            <form class="delete-form" action="/posts/<%= post._id %>?_method=DELETE" method="POST">
+                                <button class="dropdown-item btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    <% }); %>
+</div>
+
+<% include ../partials/footer %>

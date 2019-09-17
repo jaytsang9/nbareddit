@@ -1,0 +1,11 @@
+#auth-body{
+    background: #212121 url("https://images.unsplash.com/photo-1478317370563-0a8fc17e6837?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60") no-repeat center center;
+}
+
+#show-card{
+    margin-bottom: 10%;
+}
+
+.dropdown-toggle::after {
+    display:none;
+}

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose"),
-      ReplySchema = new mongoose.Schema({
+      CommentSchema = new mongoose.Schema({
           text: "String",
           createdAt: {
             type: Date,
@@ -14,4 +14,4 @@ const mongoose = require("mongoose"),
         }
       });
 
-module.exports = mongoose.Schema("Reply", ReplySchema);
+module.exports = mongoose.Schema("Comment", CommentSchema);
