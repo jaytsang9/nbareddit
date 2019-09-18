@@ -1,4 +1,4 @@
-const express = require("express"),
+let express = require("express"),
       router  = express.Router({mergeParams:true}),
       passport = require("passport");
 
@@ -10,9 +10,6 @@ router.get("/", (req, res) => {
 // Auth Routes
 // ====================
 // register form route
-router.get("/register", (req, res) => {
-    res.render("register");
-})
 
 // handle register logic
 router.post("/register", (req, res) => {

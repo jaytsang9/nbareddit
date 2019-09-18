@@ -1,4 +1,4 @@
-var express         = require("express"),
+const express         = require("express"),
     app             = express(),
     bodyParser      = require("body-parser"),
     mongoose        = require("mongoose"),
@@ -7,18 +7,24 @@ var express         = require("express"),
     methodOverride  = require("method-override"),
     flash           = require("connect-flash"),
     Post            = require("./models/post"),
-    Reply           = require("./models/reply"),
+    Comment         = require("./models/comment"),
     User            = require("./models/user"),
+    seedDB          = require("./seeds"),
     port            = process.env.PORT || 3000;
+    
+
+const commentRoutes = require("./routes/comments"),
+    postRoutes = require("./routes/posts"),
+    indexRoutes = require("./routes/index");    
 
 // DB CONFIG
-var url = process.env.DATABASEURL || "mongodb://localhost:27017/restful_blog_app";
+let url = process.env.DATABASEURL || "mongodb://localhost:27017/nba_app";
 mongoose.connect(url, {useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true});
 
-mongoose.connect("mongodb://localhost:27017/yelp_camp", {useNewUrlParser: true, useFindAndModify: false});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+seedDB();
 app.use(methodOverride("_method"));
 app.use(flash());
 
@@ -39,7 +45,7 @@ passport.deserializeUser(User.deserializeUser());
 
 // Passes the currentUser data into every route so it drys up the code
 // Use this to display username on headers or webpages, etc.
-app.use(function(req, res, next){
+app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     res.locals.error = req.flash("error");
     res.locals.success = req.flash("success");
@@ -50,6 +56,6 @@ app.use("/", indexRoutes);
 app.use("/posts", postRoutes);
 app.use("/posts/:id/comments", commentRoutes);
 
-app.listen(port, function(){
+app.listen(port, () =>{
     console.log("App is starting!!!");
 });

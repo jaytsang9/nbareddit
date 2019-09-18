@@ -1,0 +1,20 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <h1 class="mx-auto">Add New Comment to <%=post.name%></h1>
+    </div>
+    <div class="row">
+        <form action="/posts/<%=post._id%>/comments" method="POST" class="mx-auto my-5">
+            <div class="form-group">
+                <input class="form-control" type="text" name="comment[text]" placeholder="text">
+            </div>
+            <button class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <div class="row">
+        <a href="/posts">Go Back</a>
+    </div>
+</div>
+
+<% include ../partials/footer %>
