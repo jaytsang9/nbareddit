@@ -1,5 +1,5 @@
 body {
-    background-color: #212121;
+    background-color: #000;
 }
 
 #landing-header {
@@ -40,22 +40,22 @@ body {
 }
 
 .slideshow li:nth-child(1) { 
-    background-image: url(https://images.unsplash.com/photo-1519861531473-9200262188bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80);
+    background-image: url(https://i.pinimg.com/originals/20/55/79/205579fcbe2af064009b88c52e948afa.jpg);
 }
 .slideshow li:nth-child(2) { 
-    background-image: url(http://stadiumparkingguides.com/wp-content/uploads/2014/10/barclays_center_parking.jpg); 
+    background-image: url(https://cdn.nba.net/nba-drupal-prod/styles/landscape/s3/2018-10/warriors-2017-championship-ring-closeup.jpg?itok=8cCnZbU_);
     animation-delay: 10s; 
 }
 .slideshow li:nth-child(3) { 
-    background-image: url(https://wallpaperbasketball.com/wp-content/uploads/2018/05/NBA-Wallpaper-For-Mac-Backgrounds.jpg);
+    background-image: url(https://images.unsplash.com/photo-1549210194-fb0aac030c32?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80);
     animation-delay: 20s; 
 }
 .slideshow li:nth-child(4) { 
-    background-image: url(https://images.unsplash.com/photo-1504450758481-7338eba7524a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60);
+    background-image: url(https://populous.com/wp-content/uploads/2019/09/MBNBAAR_0316_GarrettRowland.jpg);
     animation-delay: 30s; 
 }
 .slideshow li:nth-child(5) { 
-    background-image: url(https://images.unsplash.com/photo-1549210194-fb0aac030c32?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80);
+    background-image: url(https://images.unsplash.com/photo-1519861531473-9200262188bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80);
     animation-delay: 40s; 
 }
 

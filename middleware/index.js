@@ -1,17 +1,16 @@
-const Post = require("../models/post");
-const Comment = require("../models/comment");
-// all the middleware goes here
-let middlewareObj = {};
+const Post          = require("../models/post"),
+      Comment       = require("../models/comment"),
+      middlewareObj = {};
 
-middlewareObj.checkPostOwnership = (req, res, next) =>{
+middlewareObj.checkPostOwnership = (req, res, next) => {
     // is user logged in?
     if (req.isAuthenticated()){
         Post.findById(req.params.id, (err, foundPost) => {
             if(err || !foundPost){
                 req.flash("error", "Post not found");
-                res.redirect("/post");
+                res.redirect("/posts");
             } else {
-                // does user own the campground?
+                // does user own the post?
                 if(foundPost.author.id.equals(req.user._id)){
                     next();
                 } else {
@@ -26,14 +25,14 @@ middlewareObj.checkPostOwnership = (req, res, next) =>{
     }
 };
 
-middlewareObj.checkCommentOwnership = (req, res, next) =>{
+middlewareObj.checkCommentOwnership = (req, res, next) => {
     if (req.isAuthenticated()){
         Comment.findById(req.params.comment_id, (err, foundComment) => {
             if(err || !foundComment){
                 req.flash("error", "Comment not found!");
-                res.redirect("/campgrounds");
+                res.redirect("/posts");
             } else {
-                // does user own the campground?
+                // does user own the post?
                 if(foundComment.author.id.equals(req.user._id)){
                     next();
                 } else {

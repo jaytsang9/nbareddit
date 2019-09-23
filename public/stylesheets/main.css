@@ -1,15 +1,125 @@
-#auth-body{
-    background: #212121 url("https://images.unsplash.com/photo-1478317370563-0a8fc17e6837?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60") no-repeat center center;
-}
-
 body {
-    background-color: #212121;
+    background-color: black;
+    font-family: 'Roboto', sans-serif;
+    color: white;
 }
 
-#show-card{
-    margin-bottom: 10%;
+#logo{
+    font-family: 'Gugi', cursive;
+    letter-spacing: 1px;
+    font-size: 33px;
+    color: #5cb85c;
+    /*#28a745*/
+    /*#b8b8b8*/
+    /*#5cb85c*/
 }
 
-.dropdown-toggle::after {
-    display:none;
+.auth-background{
+    background: #212121 url("https://wallpaperbasketball.com/wp-content/uploads/2018/05/NBA-Wallpaper-For-Mac-Backgrounds.jpg") no-repeat center center;
+    background-size: cover;
+    height:100vh;
+    font-family: 'Roboto', sans-serif;
+    color:white;
+}
+
+.auth-container{
+    margin:auto;
+    width:41%;
+    padding: 5%;
+}
+
+.auth-container h3{
+    text-align:center;
+    margin-bottom:12px;
+}
+
+.auth-container button{
+    width:100%;
+}
+
+.navbar{
+    padding:0 1% 0 1%;
+    background-color: #141415;
+}
+
+.navbar-nav .nav-link{
+    margin-left:10px;
+    margin-right:10px;
+    color:white !important;
+}
+
+.alert{
+    padding: 1% 2%;
+    margin:0;
+}
+
+.index-about-container{
+    margin-bottom: 2%;
+}
+
+.index-about-container .jumbotron{
+    text-align:center;
+    opacity: 0.9;
+    background-color:orange;
+}
+
+.container{
+    margin-top:10px;
+}
+
+/* css for clicking on posts in index */
+.clickable-posts[data-clickable=true]{
+    cursor:pointer;
+}
+
+.clickable-posts[data-clickable=true]:hover{
+    border:1px solid white;
+}
+
+.card{
+    margin-bottom:1rem;
+    padding:1rem;
+}
+
+.card-title{
+    margin-bottom: 0;
+}
+
+.post-title{
+    font-size:1.65rem;
+}
+
+.post-author{
+    display:block;
+    margin-top:7px;
+    margin-bottom:15px;
+}
+
+.post-time{
+    font-size: 0.75rem;
+}
+
+.post-button{
+    margin-right:5px;
+    margin-bottom:20px;
+}
+
+.add-comment{
+    width:100%;
+}
+
+.back{
+    margin-top: 10px;
+}
+
+#rules{
+    padding:10px;
+}
+
+#rules > .lead{
+    text-align: center;
+}
+
+.list-group-item {
+    display: list-item;
 }
