@@ -1,50 +1,48 @@
-let express = require("express"),
-      router  = express.Router({mergeParams:true}),
-      passport = require("passport");
+const express = require("express"),
+      router = express.Router({mergeParams: true}),
+      Post = require("../models/post"),
+      Comment = require("../models/comment"),
+      passport = require("passport"),
+      User = require("../models/user");
 
 router.get("/", (req, res) => {
     res.render("landing");
 });
 
-// ====================
-// Auth Routes
-// ====================
-// register form route
+router.get("/register", (req, res) => {
+    res.render("register");
+})
 
-// handle register logic
-router.post("/register", (req, res) => {
+router.post("/register", (req, res) =>{
     let newUser = new User({username: req.body.username});
     User.register(newUser, req.body.password, (err, user) => {
         if(err){
             console.log(err);
-            req.flash("error", err.message);
-            return res.render("register");
+            return res.render("register", {error: err.message});
         }
         passport.authenticate("local")(req, res, () => {
-            req.flash("success", "Welcome to PlayerApp " + user.username);
-            res.redirect("/players");
+            req.flash("success", "Welcome to CourtVision, " + user.username + "!");
+            res.redirect("/posts");
         });
     });
 });
 
-// login form route
 router.get("/login", (req, res) =>{
     res.render("login");
 });
 
-// handling login logic
 router.post("/login", passport.authenticate("local", 
     { 
-        successRedirect: "/players",
+        successRedirect: "/posts",
         failureRedirect: "/login"
     }), (req, res) => {
 });
 
 // Logout Route
-router.get("/logout", (req, res) => {
+router.get("/logout", (req, res) =>{
     req.logout();
     req.flash("success", "Successfully Logged Out.");
-    res.redirect("/players");
+    res.redirect("/posts");
 });
 
 module.exports = router;

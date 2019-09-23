@@ -1,13 +1,13 @@
-const express = require("express"),
-      router  = express.Router({mergeParams: true}),
-      Post    = require("../models/post"),
-      Comment = require("../models/comment"),
+const express    = require("express"),
+      router     = express.Router({mergeParams: true}),
+      Post       = require("../models/post"),
+      Comment    = require("../models/comment"),
       middleware = require("../middleware");
 
 
 // Comments New
-router.get("/new", middleware.isLoggedIn, (req, res) =>{
-    // find campground by id
+router.get("/new", middleware.isLoggedIn, (req, res) => {
+    // find post by id
     Post.findById(req.params.id, (err, post) => {
         if(err || !post){
             req.flash("error", "Post not found. Unable to post comment.");
@@ -20,7 +20,7 @@ router.get("/new", middleware.isLoggedIn, (req, res) =>{
 
 // Comments Create
 router.post("/", middleware.isLoggedIn, (req, res) => {
-    // lookup campground using ID
+    // lookup post using ID
     Post.findById(req.params.id, (err, post) => {
         if(err || !post){
             req.flash("error", "Post not found. Cannot create comment.");
@@ -39,7 +39,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
                     post.comments.push(comment);
                     post.save();
                     req.flash("success", "Successfully added comment!");
-                    res.redirect("/campgrounds/" + post._id);
+                    res.redirect("/posts/" + post._id);
                 }
             });
         }
@@ -48,12 +48,12 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 
 // EDIT ROUTE FOR COMMENT
 router.get("/:comment_id/edit", middleware.checkCommentOwnership, (req, res) =>{
-    Post.findById(req.params.id, (err, foundPost) =>{
+    Post.findById(req.params.id, (err, foundPost) => {
         if (err || !foundPost){
             req.flash("error", "Post not found.");
             return res.redirect("/posts");
         }
-        Comment.findById(req.params.comment_id, (err, foundComment) =>{
+        Comment.findById(req.params.comment_id, (err, foundComment) => {
             if(err){
                 res.redirect("back");
             } else {
@@ -64,8 +64,8 @@ router.get("/:comment_id/edit", middleware.checkCommentOwnership, (req, res) =>{
 })
 
 // COMMENT UPDATE 
-router.put("/:comment_id", middleware.checkCommentOwnership, (req, res) =>{
-    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) =>{
+router.put("/:comment_id", middleware.checkCommentOwnership, (req, res) => {
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
         if(err || !updatedComment){
             req.flash("error", "Could not update comment.");
             res.redirect("back");
@@ -77,7 +77,7 @@ router.put("/:comment_id", middleware.checkCommentOwnership, (req, res) =>{
 
 // COMMENT DESTROY ROUTE
 router.delete("/:comment_id", middleware.checkCommentOwnership, (req, res) => {
-    Comment.findByIdAndRemove(req.params.comment_id, (err) =>{
+    Comment.findByIdAndRemove(req.params.comment_id, (err) => {
         if(err){
             res.redirect("back");
         } else {

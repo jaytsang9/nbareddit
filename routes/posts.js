@@ -1,99 +1,121 @@
-let express = require("express"),
-      router = express.Router({mergeParams:true}),
-      Post = require("../models/post"),
-      Comment = require("../models/comment"),
-      User = require("../models/user"),
-      middleware = require("../middleWare");
+const express    = require("express"),
+      router     = express.Router({mergeParams: true}),
+      Post       = require("../models/post"),
+      Comment    = require("../models/comment"),
+      middleware = require("../middleware");
 
-// Index route shows a list of all forum posts
+
+// INDEX ROUTE
 router.get("/", (req, res) =>{
-    Post.findById({}, (err, allPosts) => {
+    // Get all posts from database
+    Post.find({}, (err, allPosts) => {
         if(err){
             console.log(err);
         } else {
             res.render("posts/index", {posts:allPosts});
         }
-    })
+    });
 });
 
-// Create route is a post request to create the post in the db
-router.post("/", middleware.isLoggedIn, (req, res) =>{
-    // get data from form and add to campgrounds array
-    let title = req.body.title,
-        desc = req.body.description,
-        author = {
-        id: req.user._id,
-        username:req.user.username
-    };
-    let newPost = {title: title, description: desc, author: author};
-    // Create a new campground and save to DB
-    Post.create(newPost, (err, newlyCreated) =>{
+// NEW ROUTE
+router.get("/new", middleware.isLoggedIn, (req, res) =>{
+    res.render("posts/new");
+});
+
+// CREATE ROUTE
+router.post("/", middleware.isLoggedIn, (req, res) => {
+    req.body.post.description = req.sanitize(req.body.post.description);
+    req.body.post.author = {id: req.user._id, username:req.user.username};
+    Post.create(req.body.post, (err, post) => {
         if(err){
-            console.log(err);
-        } else {
+            req.flash("error", "Could not create post.");
             res.redirect("/posts");
+        } else {
+            res.redirect("/posts/" + post._id);
         }
     });
 });
 
-// New route shows new post form
-router.get("/new", (req, res) =>{
-    res.render("posts/new");
-});
-
-
-// Show route shows the specified post
+// SHOW ROUTE - show more info about one post
 router.get("/:id", (req, res) => {
-    Post.findById(req.params.id).populate("comments").exec((err, foundPost) => {
-        if(err || !foundPost){
-            req.flash("error", "Post not found!");
-            res.redirect("/posts");
+    // find the post with provided ID
+    Post.findById(req.params.id).populate("comments likes").exec((err, foundPost) => {
+        if (err || !foundPost){
+            req.flash("error", "Post not found");
+            res.redirect("back");
         } else {
+            console.log(foundPost);
             res.render("posts/show", {post: foundPost});
         }
     });
 });
 
-// Edit route shows edit form
-router.get("/:id/edit", middleware.checkPostOwnership, (req, res) => {
+// LIKE ROUTE
+router.post("/:id/like", middleware.isLoggedIn, (req, res) => {
     Post.findById(req.params.id, (err, foundPost) => {
-        if(err || !foundPost){
-            req.flash("error", "Post not found!");
-            res.redirect("/posts");
-        } else {
-            res.render("posts/edit", {post:foundPost});
+        if (err) {
+            req.flash("error", "Couldn't find post.");
+            return res.redirect("/posts");
         }
-    })
+
+        // check if req.user._id exists in foundPost.likes
+        let foundUserLike = foundPost.likes.some((like) => {
+            return like.equals(req.user._id);
+        });
+
+        if (foundUserLike) {
+            // user already liked, removing like
+            foundPost.likes.pull(req.user._id);
+        } else {
+            // adding the new user like
+            foundPost.likes.push(req.user);
+        }
+
+        foundPost.save((err) => {
+            if (err) {
+                console.log(err);
+                return res.redirect("/posts");
+            }
+            return res.redirect("/posts/" + foundPost._id);
+        });
+    });
 });
 
-// Update route sends a put request to server 
+// EDIT POST ROUTE
+router.get("/:id/edit", middleware.checkPostOwnership, (req, res) => {
+    Post.findById(req.params.id, (err, foundPost) => {
+        res.render("posts/edit", {post: foundPost});
+    });
+});
+
+// UPDATE POST ROUTE
 router.put("/:id", middleware.checkPostOwnership, (req, res) => {
+    req.body.post.description = req.sanitize(req.body.post.description);
+    // find and update the correct post
     Post.findByIdAndUpdate(req.params.id, req.body.post, (err, updatedPost) => {
-        if(err || !updatedPost){
-            req.flash("error", "Post not found!");
+        if (err || !updatedPost) {
+            req.flash("error", "Post not found.")
             res.redirect("/posts");
         } else {
             res.redirect("/posts/" + req.params.id);
         }
-    })
+    });
 });
 
-// Delete route sends a destroy request to server
-router.delete("/:id", middleware.checkPostOwnership, (req, res) => {
-    Post.findByIdAndRemove(req.params.id, (err, removedPost) => {
-        if(err || !removedPost){
-            req.flash("error", "Post not found!");
+// DESTROY POST ROUTE
+router.delete("/:id", middleware.checkPostOwnership, (req, res) =>{
+    Post.findByIdAndRemove(req.params.id, (err, postRemoved) =>{
+        if(err){
             res.redirect("/posts");
         } else {
-            Comment.deleteMany({_id: { $in: removedPost.comment}}, (err) => {
+            Comment.deleteMany({_id: { $in: postRemoved.comments}}, (err) =>{
                 if (err){
                     console.log(err);
-                } else {
-                    res.redirect("/campgrounds");
                 }
+                res.redirect("/posts");
             });
         }
-    });
+    })
 });
 
 module.exports = router;
