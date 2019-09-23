@@ -1,0 +1,10 @@
+<% if (currentUser && post.author.id.equals(currentUser._id)) { %>
+    <div class="container">
+        <div class="row">
+            <a class="post-button btn btn-secondary btn-sm" href="/posts/<%= post._id %>/comments/<%= comment._id %>/edit">edit</a>
+            <form class="post-button" action="/posts/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-secondary btn-sm">delete</button>
+            </form>
+        </div>
+    </div>
+<% } %>

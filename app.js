@@ -15,7 +15,7 @@ const express          = require("express"),
       indexRoutes      = require("./routes/index"),
       port             = process.env.PORT || 3000;
 
-mongoose.connect("mongodb://localhost:27017/nba_app", {useNewUrlParser: true, useFindAndModify: false});
+mongoose.connect("mongodb://localhost:27017/nba_app", {useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));

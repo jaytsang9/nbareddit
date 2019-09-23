@@ -1,42 +1,53 @@
 <% include ../partials/header %>
-
 <div class="container">
-    <div id="show-card" class="card bg-dark">
-        <div class="card-body">
-            <div class="row">
-                <div class="col">
-                    <h5 class="card-title"><%= post.name %></h5>
-                </div>
-            </div>
-            <div class="card-text"><%= post.description %></div>
-            <div class="card-text text-muted"><em>Posted by <%= post.author.username %> | <%= moment(post.createdAt).fromNow() %></em></div>
-            <% if (currentUser && post.author.id.equals(currentUser._id)) { %>
-                <a class="btn btn-warning" href="/posts/<%= post._id %>/edit">Edit</a>
-                <form class="delete-form" action="/posts/<%= post._id %>?_method=DELETE" method="POST">
-                    <button class="btn btn-danger">Delete</button>
-                </form>
-            <% } %>
+    <div class="row">
+
+        <div class="col-sm-1">
+            <a class="back btn btn-info" href="/posts"><i class="fas fa-arrow-left"></i></a>
         </div>
-        <hr>
-        <div class="card card-body bg-dark">
-            <a class="btn btn-success float-right" href="/posts/<%= post._id %>/comments/new">Add a New Comment</a>
-            <hr>
-            <% post.comments.forEach((comment) => { %>
-                <div class="row">
-                    <div class="col-md-12">
-                        <strong><%= comment.author.username %></strong>
-                        <span class="float-right"><%= moment(comment.createdAt).fromNow() %></span>
-                        <p><%= comment.text %></p>
-                        <% if (currentUser && comment.author.id.equals(currentUser.id)) {%>
-                            <a class="btn btn-warning btn-sm" href="/posts/<%= post._id %>/comments/<%=comment._id%>/edit">Edit</a>
-                            <form class="delete-form" action="/posts/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-                                <button class="btn btn-danger btn-sm">Delete</button>
-                            </form>
-                        <% } %>
+
+        <div class="col-sm-8">
+            <div id="show-card" class="card bg-dark">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="card-title"><%= post.name %></h4>
+                        </div>
                     </div>
+                    <div class="card-text text-muted">
+                        <div class="row">
+                            <div class="col">
+                                <small class="post-author text-muted">Posted by <%= post.author.username %> &bull; <span><%= moment(post.createdAt).fromNow() %></span></small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-text"><%= post.description %></div>
+                    <% include ../partials/postEditDeleteBtns %>
                 </div>
-            <% }) %>
+
+                <div class="container bg-dark">
+                    <hr>
+                    <a class="add-comment btn btn-success" href="/posts/<%= post._id %>/comments/new">Add New Comment</a>
+                    <% post.comments.forEach((comment) => { %>
+                        <hr>
+                        <div class="row">
+                            <div id="comments" class="col-sm-12">
+                                <small class="text-muted"><%= comment.author.username %> &bull; <span><%= moment(post.createdAt).fromNow() %></span></small>
+                                <p><%= comment.text %></p>
+                                <% include ../partials/commentEditDeleteBtns %>
+                            </div>
+                        </div>
+                        
+                    <% }) %>
+                </div>
+
+            </div>
         </div>
+
+        <div class="col-sm-3">
+            <% include ../partials/rulesSideBar %>
+        </div>
+
     </div>
 </div>
 <% include ../partials/footer %>

@@ -1,36 +1,64 @@
 <% include ../partials/header %>
 
-<div class="container">
-    <header class="jumbotron bg-secondary">
+<div class="index-about-container">
+    <header id="jumbotron" class="jumbotron bg-success">
         <div class="container">
-            <h1>Welcome to Discussion Forums!</h1>
-            <p>View our most hotly-debated topics!</p>
-            <p><a href="/posts/new">Add new post</a></p>
+            <h1>Welcome To CourtVision!</h1>
+            <p>View the hottest trending topics in the NBA!</p>
         </div>
     </header>
+</div>
 
-    <% posts.forEach((post) =>{ %>
+<div class="container">
+    <% posts.slice().reverse().forEach((post) => { %>
         <div class="row">
             <div class="col-sm-12">
-                <strong><%= post.author.username %></strong>
-                <span class="float-right"><%= moment(post.createdAt).fromNow() %></span>
-                <p><%= post.description %></p>
-                <% if (currentUser && post.author.id.equals(currentUser.id)) {%>
-                    <div class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-h">
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item btn btn-warning btn-sm" href="/posts/<%= post._id %>/edit">Edit</a>
-                            <form class="delete-form" action="/posts/<%= post._id %>?_method=DELETE" method="POST">
-                                <button class="dropdown-item btn btn-danger btn-sm">Delete</button>
-                            </form>
+                <div class="clickable-posts card bg-dark" data-clickable="true" data-href="/posts/<%= post._id %>">
+                    <div class="card-body">
+
+                        <h6 class="card-title">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <strong class="post-title"><%= post.name %></strong>
+                                </div>
+                                <div class="col-sm-2">
+                                    <span class="post-time float-right"><i class="far fa-clock"></i> <%= moment(post.createdAt).fromNow() %></span>
+                                </div>
+                            </div>
+                        </h6>
+                        <small class="post-author text-success">Posted by <i class="fas fa-user-circle"></i> <%= post.author.username %></small>
+                        <p class="card-text"><%= post.description.substring(0,100) %>...</p>
+
+
+                        <div class="container">
+                            <div class="row">
+                                <form action="/posts/<%= post._id %>/like" method="POST">
+                                    <div class="btn-group d-flex" role="group">
+                                        <% if (currentUser && post.likes.some((like) => {
+                                            return like.equals(currentUser._id)
+                                        })) { %>
+                                            <button class="post-button btn btn-sm btn-primary">
+                                                <i class="fas fa-thumbs-up"></i> <%= post.likes.length %> Likes 
+                                            </button>
+                                        <% } else { %>
+                                            <button class="post-button btn btn-sm btn-secondary">
+                                                <i class="fas fa-thumbs-up"></i> <%= post.likes.length %> Like
+                                            </button>
+                                        <% } %>
+                                    </div>
+                                </form>
+                                <a class="post-button btn btn-secondary btn-sm" href="/posts/<%= post._id %>#comments">
+                                    <i class="fas fa-comment-alt"></i> <%= post.comments.length %> Comments 
+                                </a>
+                            </div>
                         </div>
+                        
                     </div>
-                <% } %>
+                </div>
+
             </div>
         </div>
-    <% }); %>
+    <% }); %>        
 </div>
 
 <% include ../partials/footer %>
