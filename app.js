@@ -13,9 +13,10 @@ const express          = require("express"),
       commentRoutes    = require("./routes/comments"),
       postRoutes       = require("./routes/posts"),
       indexRoutes      = require("./routes/index"),
+      dashboardRoutes  = require("./routes/dashboard"),
       port             = process.env.PORT || 3000;
 
-mongoose.connect("mongodb://localhost:27017/nba_app", {useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true});
+mongoose.connect("mongodb://localhost:27017/nba_app", {useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology:true});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -53,6 +54,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/", indexRoutes);
+app.use("/dashboard", dashboardRoutes);
 app.use("/posts", postRoutes);
 app.use("/posts/:id/comments", commentRoutes);
 

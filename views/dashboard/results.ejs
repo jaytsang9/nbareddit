@@ -1,0 +1,75 @@
+<% include ../partials/header %> 
+
+<div class="dashboard-jumbotron jumbotron bg-secondary">
+    <h3> Welcome to the player dashboard!</h3>
+    <p>Use the dashboard to search up any player and receive a full report on their regular season statistics.</p>
+    <form action="/dashboard/results" method="GET" autocomplete="off">
+        <input class="form-control bg-dark text-light" type="text" name="search" placeholder="SEARCH FOR A PLAYER e.g. LEBRON JAMES">
+    </form>        
+</div>
+
+
+<div class="dashboard-container container">
+    <div class="card bg-dark"> 
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <h4 class="card-title"><%=player["data"][0]["first_name"] %></h4>
+                        <h3 class="card-title"><strong><%=player["data"][0]["last_name"] %></strong></h3>
+                        <p class="card-text text-muted"><%= player["data"][0]["team"]["full_name"] %> &bull; <%= player["data"][0]["position"] %></p>
+                    </div>
+                    <div class="col">
+                        <table class="table-borderless">
+                            <tbody>
+                                <tr>
+                                    <td class="text-muted">HEIGHT</td>
+                                    <td></td>
+                                    <td><%= player["data"][0]["height_feet"] %>'<%= player["data"][0]["height_inches"] %>"</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">WEIGHT</td>
+                                    <td></td>
+                                    <td><%= player["data"][0]["weight_pounds"] %> lbs</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">CONF</td>
+                                    <td></td>
+                                    <td><%= player["data"][0]["team"]["conference"] %></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col">
+                        <table class="">
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>       
+    </div>
+
+
+    <h3 class="stats-header text-success"><%= avgData["data"][0]["season"] %> - <%= avgData["data"][0]["season"] + 1%> SEASON AVERAGES</h3>
+    <table class="stats-table table">
+        <thead>
+            <tr class="text-muted">
+                <!-- Averages Labels -->
+                <% avgLabels.forEach((label) => { %>
+                    <th scope="col"><%= label %></th>
+                <% }); %>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="text-light">
+                <!-- Actual Numbers  -->
+                <% avgs.forEach((avg) => { %>
+                    <td><%= avg %> </td>
+                <% }); %>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    
+<% include ../partials/footer %> 

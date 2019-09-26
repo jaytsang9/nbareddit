@@ -1,0 +1,11 @@
+<% include ../partials/header %> 
+
+<div class="dashboard-jumbotron jumbotron bg-secondary">
+    <h4> Welcome to the player dashboard!</h4>
+    <p>Use the dashboard to search up any player and receive a full report on their regular season statistics.</p>
+    <form action="/dashboard/results" method="GET" autocomplete="off">
+        <input class="form-control bg-dark text-light" type="text" name="search" placeholder="SEARCH FOR A PLAYER e.g. LEBRON JAMES">
+    </form>        
+</div>
+
+<% include ../partials/footer %>
