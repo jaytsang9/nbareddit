@@ -3,7 +3,7 @@
     <div class="row">
 
         <div class="col-sm-1">
-            <a class="back btn btn-info" href="/posts"><i class="fas fa-arrow-left"></i></a>
+            <a class="back btn btn-primary" href="/posts"><i class="fas fa-arrow-left"></i></a>
         </div>
 
         <div class="col-sm-8">
@@ -17,27 +17,30 @@
                     <div class="card-text text-muted">
                         <div class="row">
                             <div class="col">
-                                <small class="post-author text-muted">Posted by <%= post.author.username %> &bull; <span><%= moment(post.createdAt).fromNow() %></span></small>
+                                <small class="post-author text-muted">Posted by <span class="text-info"><%= post.author.username %></span> &bull; <%= moment(post.createdAt).fromNow() %></small>
                             </div>
                         </div>
                     </div>
                     <div class="card-text"><%= post.description %></div>
-                    <% include ../partials/postEditDeleteBtns %>
+                    <div class="container">
+                        <div class="row">
+                            <% if (currentUser && post.author.id.equals(currentUser._id)) { %>
+                                <% include ../partials/postEditDeleteBtns %>
+                            <% } %>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="container bg-dark">
-                    <hr>
-                    <a class="add-comment btn btn-success" href="/posts/<%= post._id %>/comments/new">Add New Comment</a>
+                    <hr class="page-break">
+                    <a id="add-comment-form" class="btn btn-primary" href="/posts/<%= post._id %>/comments/new">Add New Comment</a>
                     <% post.comments.forEach((comment) => { %>
-                        <hr>
-                        <div class="row">
-                            <div id="comments" class="col-sm-12">
-                                <small class="text-muted"><%= comment.author.username %> &bull; <span><%= moment(post.createdAt).fromNow() %></span></small>
-                                <p><%= comment.text %></p>
+                        <hr class="page-break">
+                            <small class="text-info"><%= comment.author.username %> <span class="text-muted">&bull; <%= moment(post.createdAt).fromNow() %></span></small>
+                            <p><%= comment.text %></p>
+                            <% if (currentUser && comment.author.id.equals(currentUser._id)) { %>
                                 <% include ../partials/commentEditDeleteBtns %>
-                            </div>
-                        </div>
-                        
+                            <% } %>
                     <% }) %>
                 </div>
 
