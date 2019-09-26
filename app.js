@@ -15,7 +15,7 @@ const express          = require("express"),
       indexRoutes      = require("./routes/index"),
       dashboardRoutes  = require("./routes/dashboard"),
       port             = process.env.PORT || 3000,
-      url            = process.env.DATABASEURL || "mongodb://localhost:27017/nba_app";
+      url              = process.env.DATABASEURL || "mongodb://localhost:27017/nba_app";
 
 mongoose.connect(url, {useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology:true});
 app.use(bodyParser.urlencoded({extended: true}));
