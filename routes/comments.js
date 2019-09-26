@@ -48,16 +48,16 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 
 // EDIT ROUTE FOR COMMENT
 router.get("/:comment_id/edit", middleware.checkCommentOwnership, (req, res) =>{
-    Post.findById(req.params.id, (err, foundPost) => {
-        if (err || !foundPost){
+    Post.findById(req.params.id, (err, post) => {
+        if (err || !post){
             req.flash("error", "Post not found.");
             return res.redirect("/posts");
         }
-        Comment.findById(req.params.comment_id, (err, foundComment) => {
+        Comment.findById(req.params.comment_id, (err, comment) => {
             if(err){
                 res.redirect("back");
             } else {
-                res.render("comments/edit", {post_id: req.params.id, comment: foundComment});
+                res.render("comments/edit", {post_id: req.params.id, comment: comment});
             }
         })
     })

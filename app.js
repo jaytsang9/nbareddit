@@ -14,9 +14,10 @@ const express          = require("express"),
       postRoutes       = require("./routes/posts"),
       indexRoutes      = require("./routes/index"),
       dashboardRoutes  = require("./routes/dashboard"),
-      port             = process.env.PORT || 3000;
+      port             = process.env.PORT || 3000,
+      url            = process.env.DATABASEURL || "mongodb://localhost:27017/nba_app";
 
-mongoose.connect("mongodb://localhost:27017/nba_app", {useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology:true});
+mongoose.connect(url, {useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology:true});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -29,7 +30,7 @@ app.locals.moment = require('moment');
 
 // Passport config
 app.use(require("express-session")({
-    secret: "Once again Rusty wins cutest dog!",
+    secret: "Bentley is the cutest dog!",
     resave: false,
     saveUninitialized: false
 }));

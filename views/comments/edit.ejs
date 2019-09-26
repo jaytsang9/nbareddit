@@ -2,19 +2,25 @@
 
 <div class="container">
     <div class="row">
-        <h1 class="mx-auto">Edit Comment </h1>
-    </div>
-    <div class="row">
-        <form action="/posts/<%=post_id%>/comments/<%=comment._id%>?_method=PUT" method="POST" class="mx-auto my-5">
-            <div class="form-group">
-                <input class="form-control" type="text" name="comment[text]" placeholder="text" value="<%= comment.text %>">
+        <div class="col-sm-1">
+            <a class="back btn btn-info" href="/posts"><i class="fas fa-arrow-left"></i></a>
+        </div>
+
+        <div class="col-sm-8">
+            <div class="card bg-dark">
+                <h4 class="card-title">Edit Comment</h4>
+                <form action="/posts/<%=post_id%>/comments/<%=comment._id%>?_method=PUT" method="POST" autocomplete="off">
+                    <div class="form-group">
+                        <textarea class="form-control bg-dark text-light" name="comment[text]" cols="40" rows="7" placeholder="What are your thoughts?" value="<%= comment.text %>"></textarea>
+                    </div>
+                    <button class="btn btn-primary">Submit</button>
+                </form>
             </div>
-            <button class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-    <div class="row">
-        <a href="/posts">Go Back</a>
+        </div>
+
+        <div class="col-sm-3">
+            <% include ../partials/rulesSideBar %>
+        </div>
     </div>
 </div>
-
 <% include ../partials/footer %>
