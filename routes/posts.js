@@ -8,11 +8,11 @@ const express    = require("express"),
 // INDEX ROUTE
 router.get("/", (req, res) =>{
     // Get all posts from database
-    Post.find({}, (err, allPosts) => {
+    Post.find({}, (err, posts) => {
         if(err){
             console.log(err);
         } else {
-            res.render("posts/index", {posts:allPosts});
+            res.render("posts/index", {posts:posts});
         }
     });
 });
@@ -31,6 +31,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
             req.flash("error", "Could not create post.");
             res.redirect("/posts");
         } else {
+            console.log(post);
             res.redirect("/posts/" + post._id);
         }
     });
@@ -39,52 +40,52 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 // SHOW ROUTE - show more info about one post
 router.get("/:id", (req, res) => {
     // find the post with provided ID
-    Post.findById(req.params.id).populate("comments likes").exec((err, foundPost) => {
-        if (err || !foundPost){
+    Post.findById(req.params.id).populate("comments likes").exec((err, post) => {
+        if (err || !post){
             req.flash("error", "Post not found");
             res.redirect("back");
         } else {
-            console.log(foundPost);
-            res.render("posts/show", {post: foundPost});
+            console.log(post);
+            res.render("posts/show", {post: post});
         }
     });
 });
 
 // LIKE ROUTE
 router.post("/:id/like", middleware.isLoggedIn, (req, res) => {
-    Post.findById(req.params.id, (err, foundPost) => {
+    Post.findById(req.params.id, (err, post) => {
         if (err) {
             req.flash("error", "Couldn't find post.");
             return res.redirect("/posts");
         }
 
-        // check if req.user._id exists in foundPost.likes
-        let foundUserLike = foundPost.likes.some((like) => {
+        // check if req.user._id exists in post.likes
+        let foundUserLike = post.likes.some((like) => {
             return like.equals(req.user._id);
         });
 
         if (foundUserLike) {
             // user already liked, removing like
-            foundPost.likes.pull(req.user._id);
+            post.likes.pull(req.user._id);
         } else {
             // adding the new user like
-            foundPost.likes.push(req.user);
+            post.likes.push(req.user);
         }
 
-        foundPost.save((err) => {
+        post.save((err) => {
             if (err) {
                 console.log(err);
                 return res.redirect("/posts");
             }
-            return res.redirect("/posts/" + foundPost._id);
+            return res.redirect("/posts/" + post._id);
         });
     });
 });
 
 // EDIT POST ROUTE
 router.get("/:id/edit", middleware.checkPostOwnership, (req, res) => {
-    Post.findById(req.params.id, (err, foundPost) => {
-        res.render("posts/edit", {post: foundPost});
+    Post.findById(req.params.id, (err, post) => {
+        res.render("posts/edit", {post: post});
     });
 });
 
@@ -104,11 +105,11 @@ router.put("/:id", middleware.checkPostOwnership, (req, res) => {
 
 // DESTROY POST ROUTE
 router.delete("/:id", middleware.checkPostOwnership, (req, res) =>{
-    Post.findByIdAndRemove(req.params.id, (err, postRemoved) =>{
+    Post.findByIdAndRemove(req.params.id, (err, post) =>{
         if(err){
             res.redirect("/posts");
         } else {
-            Comment.deleteMany({_id: { $in: postRemoved.comments}}, (err) =>{
+            Comment.deleteMany({_id: {$in: post.comments}}, (err) =>{
                 if (err){
                     console.log(err);
                 }

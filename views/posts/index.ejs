@@ -19,7 +19,7 @@
                         <h6 class="card-title">
                             <div class="row">
                                 <div class="col-sm-10">
-                                    <strong class="post-title"><%= post.name %></strong>
+                                    <strong class="post-title"><%= post.title %></strong>
                                 </div>
                                 <div class="col-sm-2">
                                     <span class="post-time float-right"><i class="far fa-clock"></i> <%= moment(post.createdAt).fromNow() %></span>
@@ -34,9 +34,9 @@
                             <div class="row">
                                 <form action="/posts/<%= post._id %>/like" method="POST">
                                     <div class="btn-group d-flex" role="group">
-                                        <% if (currentUser && post.likes.some((like) => {
-                                            return like.equals(currentUser._id)
-                                        })) { %>
+                                        <% if (currentUser && post.likes.some((like) => { %>
+                                            <% return like.equals(currentUser._id) %>
+                                        <% })) { %>
                                             <button class="post-button btn btn-sm btn-primary">
                                                 <i class="fas fa-thumbs-up"></i> <%= post.likes.length %> Likes 
                                             </button>

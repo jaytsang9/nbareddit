@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 // SCHEMA SETUP
 const PostSchema = new mongoose.Schema({
-    name: String,
+    title: String,
     description: String,
     createdAt: {type: Date, default: Date.now},
     author: {
