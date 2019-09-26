@@ -2,24 +2,23 @@
 
 <div class="container">
     <div class="row">
-        <% posts.slice().reverse().forEach((post) => { %>
-            <div class="col-sm-8">
+        <div class="col-sm-8">
+            <% posts.slice().reverse().forEach((post) => { %>
                 <div class="clickable-posts card bg-dark" data-clickable="true" data-href="/posts/<%= post._id %>">
                     <div class="card-body">
 
                         <h6 class="card-title">
                             <div class="row">
-                                <div class="col-sm-10">
+                                <div class="col-sm-9">
                                     <strong class="post-title"><%= post.title %></strong>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <span class="post-time float-right"><i class="far fa-clock"></i> <%= moment(post.createdAt).fromNow() %></span>
                                 </div>
                             </div>
                         </h6>
                         <small class="post-author text-info">Posted by <i class="fas fa-user-circle"></i> <%= post.author.username %></small>
                         <p class="card-text"><%= post.description.substring(0,100) %>...</p>
-
 
                         <div class="container">
                             <div class="row">
@@ -43,23 +42,22 @@
                                 </a>
                             </div>
                         </div>
-                        
                     </div>
                 </div>
-
-            </div>
             <% }); %>
-
-            <div class="col-sm-4">
-                <img id="pic" class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv0oe_vX8IxkHa-jc-d83TtIBju9HF5y7kwkUPZMBSTKY_jHAHVw" alt="NBA Logo">
-                <div id="welcome" class="card bg-dark">
-                    <h5 class="card-title">Home</h5>
-                    <p class="card-text">This is the frontpage! Come here to check out the hottest trending topics in the league.</p>
-                    <a class="btn btn-light" href="/campgrounds/new">Create Post</a>
-                </div>
-                <% include ../partials/rulesSideBar %>
-            </div>
         </div>
+
+        <div class="col-sm-4">
+            <img class="home-pic card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv0oe_vX8IxkHa-jc-d83TtIBju9HF5y7kwkUPZMBSTKY_jHAHVw" alt="NBA Logo">
+            <div id="welcome" class="card bg-dark">
+                <h5 class="card-title">Home</h5>
+                <p class="card-text">This is the frontpage! Come here to check out the hottest trending topics in the league.</p>
+                <a class="btn btn-light" href="/campgrounds/new">Create Post</a>
+                <a class="btn btn-outline-light my-2" href="/dashboard">Dashboard</a>
+            </div>
+            <% include ../partials/rulesSideBar %>
+        </div>
+    </div>
 </div>
 
 <% include ../partials/footer %>

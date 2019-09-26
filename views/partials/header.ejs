@@ -12,18 +12,18 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <a id="logo" class="navbar-brand" href="/">CourtVision</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse justify-content-start" id="navbarSupportedContent">
-        <ul class="navbar-nav">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav justify-content-start">
             <li class="nav-item">
                 <a class="nav-link" href="/posts">Browse</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Dashboard</a>
+                <a class="nav-link" href="/dashboard">Dashboard</a>
             </li>
         </ul>
     </div>
@@ -50,6 +50,7 @@
         </ul>
     </div>
 </nav>
+
 
 <% if (error && error.length > 0) { %>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">

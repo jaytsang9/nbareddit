@@ -1,19 +1,19 @@
 <% include ./partials/header %>
 <div class="auth-background">
-    <div class="auth-container">
+    <div class="container">
         <div class="card bg-dark">
             <div class="card-body">
-                <h3 class="card-title text-success">Register for CourtVision</h3>
+                <h3 class="auth-title card-title">Register for CourtVision</h3>
                 <form action="/register" method="POST" autocomplete="off">
                     <div class="form-group">
                         <label for="text">Username</label>
-                        <input type="text" class="form-control" name="username" placeholder="Username">
+                        <input type="text" class="form-control bg-dark text-light" name="username" placeholder="Username">
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" name="password" placeholder="Password">
+                        <input type="password" class="form-control bg-dark text-light" name="password" placeholder="Password">
                     </div>
-                    <button type="submit" class="btn btn-success">Sign Up</button>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
                     <small class="form-text text-muted float-right">Already a member? <a href="/login">Log in</a></small>
                 </form>
             </div>
