@@ -1,9 +1,6 @@
-# PlayerApp
+# NBA Reddit
+
+Welcome to NBA Reddit! NBA Reddit is a clone of the popular r/nba subreddit. This clone offers the same features as the subreddit in both functionality and policy. While users will still have to abide by the same rules and conduct as its predecessor, users are able to enjoy the features that makes r/nba so trendy. Basketball fans can continue to contribute their insights on the lastest news around the league via submitting, liking, and commenting on posts. As an added bonus, users have access to a player dashboard to query each players' season averages for more in-depth analysis. 
 
 DEMO: https://www.youtube.com/watch?v=V8oX_JhG9Xw&t=2s
-
-The PlayerApp is a fun platform catering to a niche community of basketball enthusiasts. Basketball fans will be welcomed to a forum page with a list of trending topics regarding the NBA. Users will be able to view, like, or comment on other users' posts. Furthermore, the app will also include a player dashboard, which users can interact with players' season data and gain further insights about that player.
-
-When the app starts, you will reach the landing page. Clicking "Get Started" will bring you to a full index of all user blog posts. From there you can view the posts, post likes, and comments; however, write access to posts, likes, or comments, will require login credentials. Once registered and logged in, you will be allowed to start blogging.
-
-In addition, there is a dashboard page, which can be reached via the navbar. Once in the dashboard, users can input a player name into the search bar, which will return a card with their team information and biometrics as well as a table with their season averages.
+Link: https://nbareddit.herokuapp.com/
